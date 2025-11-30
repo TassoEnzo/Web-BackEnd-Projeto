@@ -1,0 +1,15 @@
+com\woapp\backend\application\dto\CategoriaCreateDTO.class
+com\woapp\backend\application\dto\ExercicioUpdateDTO.class
+com\woapp\backend\application\dto\UsuarioCreateDTO.class
+com\woapp\backend\application\dto\TreinoCreateDTO.class
+com\woapp\backend\config\security\JwtService.class
+com\woapp\backend\application\dto\UsuarioResponseDTO.class
+com\woapp\backend\domain\entities\CategoriaEntity.class
+com\woapp\backend\domain\entities\UsuarioEntity.class
+com\woapp\backend\application\dto\ExercicioCreateDTO.class
+com\woapp\WoappApplication.class
+com\woapp\backend\application\dto\CategoriaUpdateDTO.class
+com\woapp\backend\domain\entities\ExercicioEntity.class
+com\woapp\backend\application\dto\TreinoUpdateDTO.class
+com\woapp\backend\application\dto\UsuarioUpdateDTO.class
+com\woapp\backend\domain\entities\TreinoEntity.class

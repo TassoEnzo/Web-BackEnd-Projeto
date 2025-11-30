@@ -1,0 +1,1 @@
+ C:\\Users\\enzor\\Downloads\\WOapp-Projeto\\front-end\\.dart_tool\\flutter_build\\8a7d3e3be2eacdf4496635ba7fe69b7b\\native_assets.json: 
