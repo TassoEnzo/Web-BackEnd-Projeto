@@ -32,16 +32,14 @@ class PainelUsuario {
                 ),
                 padding: const EdgeInsets.all(20),
                 child: FutureBuilder<Usuario>(
-                  future: UsuarioApi.getMe(), // CORRIGIDO: me() → getMe()
+                  future: UsuarioApi.getMe(),
                   builder: (context, snapshot) {
-                    // Loading
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
                         child: CircularProgressIndicator(color: Colors.white),
                       );
                     }
 
-                    // Erro
                     if (snapshot.hasError) {
                       return Center(
                         child: Column(
@@ -78,7 +76,6 @@ class PainelUsuario {
                       );
                     }
 
-                    // Sucesso
                     final usuario = snapshot.data!;
                     final nome = usuario.nome;
                     final email = usuario.email;
@@ -99,7 +96,6 @@ class PainelUsuario {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Cabeçalho com foto e nome
                         Center(
                           child: Column(
                             children: [
@@ -139,7 +135,6 @@ class PainelUsuario {
                         const SizedBox(height: 18),
                         const Divider(color: Colors.white24),
 
-                        // Opção de atualizar dados
                         ListTile(
                           leading: const Icon(Icons.edit, color: Colors.white),
                           title: const Text(
@@ -161,7 +156,6 @@ class PainelUsuario {
 
                         const Spacer(),
 
-                        // Botão de sair
                         ListTile(
                           leading: const Icon(Icons.exit_to_app, color: Colors.red),
                           title: const Text(
@@ -174,7 +168,6 @@ class PainelUsuario {
                           onTap: () async {
                             Navigator.pop(context);
 
-                            // Mostra diálogo de confirmação
                             final confirmar = await showDialog<bool>(
                               context: context,
                               builder: (context) => AlertDialog(

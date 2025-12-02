@@ -71,7 +71,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
 
       setState(() => _carregandoFoto = true);
 
-      // Converte para base64
       final bytes = await File(img.path).readAsBytes();
       final base64String = base64Encode(bytes);
 
@@ -173,14 +172,12 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
         ),
       );
 
-      // Limpa campos de senha
       if (_alterandoSenha) {
         _senhaController.clear();
         _confirmarSenhaController.clear();
         setState(() => _alterandoSenha = false);
       }
 
-      // Volta para tela anterior
       Navigator.pop(context);
     } catch (e) {
       if (!mounted) return;
@@ -277,7 +274,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
             key: _formKey,
             child: Column(
               children: [
-                // Avatar
                 GestureDetector(
                   onTap: _mostrarOpcoesImagem,
                   child: Stack(
@@ -323,7 +319,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
 
                 const SizedBox(height: 20),
 
-                // Campo Nome
                 _campo("Nome", _nomeController, validator: (v) {
                   if (v == null || v.isEmpty) return "Digite seu nome";
                   if (v.trim().length < 3) return "Nome muito curto";
@@ -332,7 +327,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
 
                 const SizedBox(height: 20),
 
-                // Campo Email
                 _campo("E-mail", _emailController, validator: (v) {
                   if (v == null || v.isEmpty) return "Digite seu e-mail";
                   if (!v.contains('@') || !v.contains('.')) {
@@ -343,7 +337,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
 
                 const SizedBox(height: 20),
 
-                // Seletor de Nível
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -381,7 +374,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
 
                 const SizedBox(height: 20),
 
-                // Botão para alterar senha
                 SwitchListTile(
                   title: const Text(
                     "Alterar senha",
@@ -400,7 +392,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
                   },
                 ),
 
-                // Campos de senha (se ativado)
                 if (_alterandoSenha) ...[
                   const SizedBox(height: 10),
                   _campo(
@@ -457,7 +448,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
 
                 const SizedBox(height: 30),
 
-                // Botão Salvar
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
@@ -490,7 +480,6 @@ class _AtualizarDadosPaginaState extends State<AtualizarDadosPagina> {
                 const Divider(color: Colors.white24),
                 const SizedBox(height: 10),
 
-                // Botão Deletar Conta
                 TextButton.icon(
                   onPressed: _carregando ? null : _deletarConta,
                   icon: const Icon(Icons.delete_forever, color: Colors.red),

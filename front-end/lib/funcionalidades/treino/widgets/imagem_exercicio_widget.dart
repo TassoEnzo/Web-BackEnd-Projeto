@@ -26,8 +26,8 @@ class ImagemExercicioWidget extends StatelessWidget {
       width: width ?? double.infinity,
       fit: fit,
       errorBuilder: (context, error, stackTrace) {
-        print('🔴 Erro ao carregar imagem: $assetPath');
-        print('🔴 Erro detalhado: $error');
+        debugPrint('Erro ao carregar imagem: $assetPath');
+        debugPrint('Erro detalhado: $error');
         return _buildErrorWidget();
       },
     );

@@ -13,7 +13,6 @@ class Usuario {
     this.nivel,
   });
 
-  // Factory constructor para criar Usuario a partir de JSON
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
       id: json['id'] as String,
@@ -24,7 +23,6 @@ class Usuario {
     );
   }
 
-  // Método para converter Usuario em JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -35,7 +33,6 @@ class Usuario {
     };
   }
 
-  // Método copyWith para criar cópias modificadas
   Usuario copyWith({
     String? id,
     String? nome,
@@ -52,13 +49,11 @@ class Usuario {
     );
   }
 
-  // toString para facilitar debug
   @override
   String toString() {
     return 'Usuario(id: $id, nome: $nome, email: $email, nivel: $nivel, temFoto: ${fotoBase64 != null})';
   }
 
-  // Equals e hashCode para comparações
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;

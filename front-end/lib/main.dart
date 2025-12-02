@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
           '/treino/exercicios': (_) => const ExerciciosListaPagina(),
         },
         onGenerateRoute: (settings) {
-          // Rota para treinos com nível dinâmico
           if (settings.name == '/treino') {
             final args = settings.arguments as Map<String, dynamic>?;
             final nivel = args?['nivel'] ?? 'iniciante';
@@ -56,7 +55,6 @@ class MyApp extends StatelessWidget {
             );
           }
 
-          // Rota para vídeos de exercícios
           if (settings.name == '/treino/video') {
             final args = settings.arguments as Map<String, dynamic>?;
             return MaterialPageRoute(

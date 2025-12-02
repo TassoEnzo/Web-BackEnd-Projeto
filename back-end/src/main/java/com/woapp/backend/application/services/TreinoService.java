@@ -37,7 +37,6 @@ public class TreinoService {
 
     public TreinoEntity criar(TreinoCreateDTO dto) {
 
-        // Converter UUID para String ao buscar usuário
         UsuarioEntity usuario = usuarioRepository.findById(dto.usuarioId().toString())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 

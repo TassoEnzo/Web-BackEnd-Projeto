@@ -39,7 +39,7 @@ class _TreinoPaginaState extends State<TreinoPagina> {
         _erro = 'Erro ao carregar treinos: $e';
         _carregando = false;
       });
-      print('Erro ao carregar treinos: $e');
+      debugPrint('Erro ao carregar treinos: $e');
     }
   }
 

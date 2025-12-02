@@ -20,15 +20,12 @@ class _EscolhaNivelPaginaState extends State<EscolhaNivelPagina> {
     });
 
     try {
-      // Usa o controlador correto
       final ctrl = AtualizarDadosControlador();
       
-      // Atualiza o nível no backend
       await ctrl.atualizarNivel(nivel);
       
       if (!mounted) return;
 
-      // Navega para a página de treinos
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -43,7 +40,6 @@ class _EscolhaNivelPaginaState extends State<EscolhaNivelPagina> {
         _salvando = false;
       });
       
-      // Exibe SnackBar com erro
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(_erro!),
@@ -132,7 +128,6 @@ class _EscolhaNivelPaginaState extends State<EscolhaNivelPagina> {
               height: 90,
               fit: BoxFit.contain,
               errorBuilder: (context, error, stackTrace) {
-                // Fallback se a imagem não existir
                 return Container(
                   width: 90,
                   height: 90,
@@ -204,12 +199,11 @@ class _EscolhaNivelPaginaState extends State<EscolhaNivelPagina> {
                   cor: const Color(0xFF7A8F85),
                   nivel: "avancado",
                 ),
-                const SizedBox(height: 80), // Espaço para mensagem de erro
+                const SizedBox(height: 80),
               ],
             ),
           ),
           
-          // Mensagem de erro flutuante
           if (_erro != null)
             Positioned(
               bottom: 16,

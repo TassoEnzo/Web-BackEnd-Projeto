@@ -6,13 +6,11 @@ import '../treino/dominio/entidades/treino.dart';
 class TreinoApi {
   static const String _baseUrl = "http://10.0.2.2:8080/treinos";
 
-  // Método helper para obter o token
   static Future<String?> _getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
 
-  // Método helper para criar headers com token
   static Future<Map<String, String>> _getHeaders() async {
     final token = await _getToken();
     return {
@@ -38,15 +36,7 @@ class TreinoApi {
     final url = Uri.parse("$_baseUrl/nivel/$nivel");
     final headers = await _getHeaders();
     
-    print("=== REQUISIÇÃO TREINOS ===");
-    print("URL: $url");
-    print("Headers: $headers");
-    
     final resp = await http.get(url, headers: headers);
-
-    print("Status: ${resp.statusCode}");
-    print("Body: ${resp.body}");
-    print("=========================");
 
     if (resp.statusCode != 200) {
       throw Exception("Erro ao carregar treinos por nível: ${resp.body}");

@@ -8,7 +8,6 @@ public class UsuarioCreateDTO {
     private String fotoBase64;
     private String nivel;
 
-    // Getters e Setters
     public String getNome() {
         return nome;
     }

@@ -5,9 +5,6 @@ CREATE DATABASE IF NOT EXISTS woapp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicod
 USE woapp;
 #drop database woapp;
 
--- ============================
--- TABELA USUÁRIOS
--- ============================
 /*DROP TABLE IF EXISTS usuarios;
 CREATE TABLE usuarios (
     id VARCHAR(36) PRIMARY KEY,
@@ -19,18 +16,12 @@ CREATE TABLE usuarios (
     INDEX idx_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================
--- CATEGORIAS
--- ============================
 DROP TABLE IF EXISTS categorias;
 CREATE TABLE categorias (
     id CHAR(36) PRIMARY KEY,
     nome VARCHAR(100) NOT NULL UNIQUE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- ============================
--- EXERCÍCIOS
--- ============================
 DROP TABLE IF EXISTS exercicios;
 CREATE TABLE exercicios (
     id CHAR(36) PRIMARY KEY,
@@ -41,9 +32,6 @@ CREATE TABLE exercicios (
     link_youtube VARCHAR(500)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- ============================
--- RELAÇÃO EXERCÍCIO -> CATEGORIA (N:N)
--- ============================
 DROP TABLE IF EXISTS exercicio_categoria;
 CREATE TABLE exercicio_categoria (
     exercicio_id CHAR(36) NOT NULL,
@@ -53,9 +41,6 @@ CREATE TABLE exercicio_categoria (
     FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- ============================
--- TREINOS
--- ============================
 DROP TABLE IF EXISTS treinos;
 CREATE TABLE treinos (
     id CHAR(36) PRIMARY KEY,
@@ -67,9 +52,6 @@ CREATE TABLE treinos (
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- ============================
--- RELAÇÃO TREINO -> EXERCÍCIOS (N:N)
--- ============================
 DROP TABLE IF EXISTS treino_exercicios;
 CREATE TABLE treino_exercicios (
     treino_id CHAR(36) NOT NULL,
@@ -79,17 +61,12 @@ CREATE TABLE treino_exercicios (
     FOREIGN KEY (exercicio_id) REFERENCES exercicios(id) ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;*/
 
--- ============================
--- INSERIR DADOS INICIAIS
--- ============================
 
--- 2) Inserir Categorias
 INSERT INTO categorias (id, nome) VALUES
 (UUID(), 'iniciante'),
 (UUID(), 'intermediario'),
 (UUID(), 'avancado');
 
--- 3) Inserir Exercícios COM IMAGENS
 INSERT INTO exercicios (id, nome, descricao, imagem, tipo_equipamento, link_youtube) VALUES
 (UUID(), 'Supino Reto Barra', 'Exercício de peitoral.', 'supino-reto-barra.png', 'ACADEMIA', 'rT7DgCr-3pg'),
 (UUID(), 'Supino Inclinado Halter', 'Parte superior do peitoral.', 'supino-inclinado-halter.png', 'ACADEMIA', 'DbFgADa2PL8'),
@@ -120,7 +97,6 @@ INSERT INTO exercicios (id, nome, descricao, imagem, tipo_equipamento, link_yout
 (UUID(), 'Rosca Martelo', 'Bíceps, braquial.', 'rosca_martelo.png', 'ACADEMIA', 'zC3nLlEvin4');
 
 
--- 4) Relacionar Exercícios com Categorias
 
 -- INICIANTE
 INSERT INTO exercicio_categoria (exercicio_id, categoria_id)
@@ -199,17 +175,3 @@ AND e.nome IN (
   'Tríceps Corda Polia',
   'Rosca Martelo'
 );
-
--- ============================
--- VERIFICAR DADOS
--- ============================
-SELECT * FROM usuarios;
-SELECT * FROM categorias;
-SELECT id, nome, imagem, tipo_equipamento, link_youtube FROM exercicios;
-SELECT 
-    e.nome as exercicio, 
-    c.nome as categoria 
-FROM exercicios e
-JOIN exercicio_categoria ec ON e.id = ec.exercicio_id
-JOIN categorias c ON c.id = ec.categoria_id
-ORDER BY e.nome, c.nome;

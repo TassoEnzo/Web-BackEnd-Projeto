@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../treino/dominio/entidades/exercicios.dart';
 import '/funcionalidades/api/exercicios_api.dart';
 import '../../../usuario/widgets/painel_usuario.dart';
-import '../../widgets/imagem_exercicio_widget.dart'; // NOVO IMPORT
+import '../../widgets/imagem_exercicio_widget.dart';
 
 class ExerciciosListaPagina extends StatefulWidget {
   const ExerciciosListaPagina({super.key});
@@ -24,21 +24,21 @@ class _ExerciciosListaPaginaState extends State<ExerciciosListaPagina> {
   void _carregarExercicios() {
     _futureExercicios = ExerciciosApi.listar().then(
       (lista) {
-        print('🔵 Quantidade de itens recebidos: ${lista.length}');
+        debugPrint('Quantidade de itens recebidos: ${lista.length}');
         
         return lista.map((json) {
           try {
-            print('🔵 Convertendo: ${json['nome']}');
+            debugPrint('Convertendo: ${json['nome']}');
             return Exercicio.fromJson(json);
           } catch (e) {
-            print('🔴 ERRO ao converter exercício: $e');
-            print('🔴 JSON problemático: $json');
+            debugPrint('ERRO ao converter exercício: $e');
+            debugPrint('JSON problemático: $json');
             rethrow;
           }
         }).toList();
       },
     ).catchError((error) {
-      print('🔴 ERRO GERAL: $error');
+      debugPrint('ERRO GERAL: $error');
       throw error;
     });
   }
@@ -104,16 +104,16 @@ class _ExerciciosListaPaginaState extends State<ExerciciosListaPagina> {
 
           final lista = snapshot.data ?? [];
           
-          print('🔵 Total de exercícios: ${lista.length}');
-          print('🔵 Filtrando por: $selectedTipo');
+          debugPrint('Total de exercícios: ${lista.length}');
+          debugPrint('Filtrando por: $selectedTipo');
           
           final listaFiltrada = lista.where((e) {
             final match = e.tipoEquipamento.toLowerCase() == selectedTipo.toLowerCase();
-            print('🔵 ${e.nome}: ${e.tipoEquipamento} == $selectedTipo? $match');
+            debugPrint('${e.nome}: ${e.tipoEquipamento} == $selectedTipo? $match');
             return match;
           }).toList();
 
-          print('🔵 Exercícios filtrados: ${listaFiltrada.length}');
+          debugPrint('Exercícios filtrados: ${listaFiltrada.length}');
 
           if (listaFiltrada.isEmpty) {
             return const Center(
@@ -149,9 +149,8 @@ class _ExerciciosListaPaginaState extends State<ExerciciosListaPagina> {
                     ),
                     const SizedBox(height: 12),
                     
-                    // USA A IMAGEM DOS ASSETS
                     ImagemExercicioWidget(
-                      nomeArquivo: ex.imagem, // ex: "supino_reto.jpg"
+                      nomeArquivo: ex.imagem,
                       height: 180,
                       borderRadius: BorderRadius.circular(12),
                     ),

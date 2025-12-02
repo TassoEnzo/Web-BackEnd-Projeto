@@ -4,11 +4,10 @@ public class UsuarioUpdateDTO {
 
     private String nome;
     private String email;
-    private String senha;  // Campo para a senha
+    private String senha;  
     private String fotoBase64;
     private String nivel;
 
-    // Getters e Setters
     public String getNome() {
         return nome;
     }

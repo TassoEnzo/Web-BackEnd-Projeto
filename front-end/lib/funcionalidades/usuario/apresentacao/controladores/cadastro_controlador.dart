@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import '../../../api/usuario_api.dart';
 
 class CadastroControlador extends ChangeNotifier {
-  // Estado do formulário
   final formKey = GlobalKey<FormState>();
   final nomeController = TextEditingController();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
   final confirmarSenhaController = TextEditingController();
 
-  // Estados de UI
   bool _carregando = false;
   bool _senhaVisivel = false;
   bool _confirmarSenhaVisivel = false;
@@ -17,7 +15,6 @@ class CadastroControlador extends ChangeNotifier {
   String? _nivelSelecionado;
   String? _fotoBase64;
 
-  // Getters
   bool get carregando => _carregando;
   bool get senhaVisivel => _senhaVisivel;
   bool get confirmarSenhaVisivel => _confirmarSenhaVisivel;
@@ -25,50 +22,41 @@ class CadastroControlador extends ChangeNotifier {
   String? get nivelSelecionado => _nivelSelecionado;
   String? get fotoBase64 => _fotoBase64;
 
-  // Compatibilidade com código antigo que usa "falha"
   String? get mensagemErro => _erro;
   
-  // Para manter compatibilidade com código que verifica falha != null
   bool get temFalha => _erro != null;
 
-  // Lista de níveis disponíveis
   final List<String> niveisDisponiveis = [
     'iniciante',
     'intermediario',
     'avancado',
   ];
 
-  // Alterna visibilidade da senha
   void alternarVisibilidadeSenha() {
     _senhaVisivel = !_senhaVisivel;
     notifyListeners();
   }
 
-  // Alterna visibilidade da confirmação de senha
   void alternarVisibilidadeConfirmarSenha() {
     _confirmarSenhaVisivel = !_confirmarSenhaVisivel;
     notifyListeners();
   }
 
-  // Define o nível selecionado
   void setNivel(String? nivel) {
     _nivelSelecionado = nivel;
     notifyListeners();
   }
 
-  // Define a foto em base64
   void setFoto(String? fotoBase64) {
     _fotoBase64 = fotoBase64;
     notifyListeners();
   }
 
-  // Limpa mensagens de erro
   void limparErro() {
     _erro = null;
     notifyListeners();
   }
 
-  // Limpa todos os campos
   void limparCampos() {
     nomeController.clear();
     emailController.clear();
@@ -80,7 +68,6 @@ class CadastroControlador extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Validações
   String? validarNome(String? valor) {
     if (valor == null || valor.isEmpty) {
       return 'Digite seu nome';
@@ -121,17 +108,13 @@ class CadastroControlador extends ChangeNotifier {
     return null;
   }
 
-  /// MÉTODO PRINCIPAL - Mantém assinatura igual ao código antigo do Firebase
-  /// Uso: await ctrl.cadastrar(nome: '...', email: '...', senha: '...');
   Future<bool> cadastrar({
     required String nome,
     required String email,
     required String senha,
   }) async {
-    // Limpa erro anterior
     _erro = null;
 
-    // Validações (exatamente como no código Firebase)
     if (nome.isEmpty) {
       _erro = "Campo nome não pode estar vazio";
       notifyListeners();
@@ -156,13 +139,11 @@ class CadastroControlador extends ChangeNotifier {
       return false;
     }
 
-    // Inicia loading
     _carregando = true;
     notifyListeners();
 
     try {
-      // Chama API de cadastro
-      final usuario = await UsuarioApi.criar(
+      await UsuarioApi.criar(
         nome: nome,
         email: email,
         senha: senha,
@@ -170,9 +151,6 @@ class CadastroControlador extends ChangeNotifier {
         fotoBase64: _fotoBase64,
       );
 
-      print('Usuário cadastrado com sucesso: ${usuario.id}');
-
-      // Faz login automático após cadastro
       await UsuarioApi.login(
         email: email,
         senha: senha,
@@ -191,8 +169,6 @@ class CadastroControlador extends ChangeNotifier {
     }
   }
 
-  /// Método alternativo que usa os controllers
-  /// Uso: await ctrl.cadastrarNovo();
   Future<bool> cadastrarNovo() async {
     return await cadastrar(
       nome: nomeController.text.trim(),
@@ -201,14 +177,11 @@ class CadastroControlador extends ChangeNotifier {
     );
   }
 
-  // Trata mensagens de erro (compatível com códigos Firebase)
   String _tratarErro(String erro) {
-    // Erros de validação
     if (erro.contains('Email já está em uso')) {
       return 'Este email já está cadastrado';
     }
     
-    // Códigos Firebase traduzidos
     if (erro.contains('email-already-in-use')) {
       return 'Este email já está cadastrado';
     }
@@ -222,7 +195,6 @@ class CadastroControlador extends ChangeNotifier {
       return 'Operação não permitida';
     }
     
-    // Erros de conexão
     if (erro.contains('SocketException') || erro.contains('Failed host lookup')) {
       return 'Sem conexão com o servidor';
     }
@@ -230,7 +202,6 @@ class CadastroControlador extends ChangeNotifier {
       return 'Tempo de conexão esgotado';
     }
     
-    // Erros HTTP
     if (erro.contains('400')) {
       return 'Dados inválidos. Verifique os campos.';
     }
@@ -241,7 +212,6 @@ class CadastroControlador extends ChangeNotifier {
       return 'Erro no servidor. Tente novamente.';
     }
     
-    // Erro genérico (igual ao Firebase)
     return 'Erro inesperado no cadastro.';
   }
 

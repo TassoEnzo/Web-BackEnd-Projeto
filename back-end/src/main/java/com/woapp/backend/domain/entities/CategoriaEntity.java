@@ -18,10 +18,9 @@ public class CategoriaEntity {
     private String nome;
 
     @ManyToMany(mappedBy = "categorias", fetch = FetchType.LAZY)
-    @JsonIgnore  // EVITA LOOP INFINITO
+    @JsonIgnore
     private Set<ExercicioEntity> exercicios = new HashSet<>();
 
-    // Construtores
     public CategoriaEntity() {
     }
 
@@ -30,7 +29,6 @@ public class CategoriaEntity {
         this.nome = nome;
     }
 
-    // Getters e Setters
     public UUID getId() {
         return id;
     }

@@ -23,7 +23,7 @@ public class TreinoEntity {
 
     private String nivel;
 
-    @ManyToMany(fetch = FetchType.LAZY)  // ADICIONE LAZY
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "treino_exercicio",
             joinColumns = @JoinColumn(name = "treino_id"),
@@ -31,9 +31,9 @@ public class TreinoEntity {
     )
     private Set<ExercicioEntity> exercicios = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)  // ADICIONE LAZY
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-    @JsonIgnore  // EVITA SERIALIZAR O USUÁRIO COMPLETO
+    @JsonIgnore
     private UsuarioEntity usuario;
 
     public TreinoEntity() {}

@@ -16,7 +16,7 @@ public class UsuarioEntity implements UserDetails {
 
     @Id
     @Column(name = "id", length = 36)
-    private String id;  // Mudança: UUID para String
+    private String id;
 
     @Column(nullable = false, length = 255)
     private String nome;
@@ -37,12 +37,10 @@ public class UsuarioEntity implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<TreinoEntity> treinos = new ArrayList<>();
 
-    // Construtor padrão
     public UsuarioEntity() {
         this.id = UUID.randomUUID().toString();
     }
 
-    // Construtor parametrizado
     public UsuarioEntity(UUID id, String nome, String email, String senha, String fotoBase64, String nivel) {
         this.id = id != null ? id.toString() : UUID.randomUUID().toString();
         this.nome = nome;
@@ -52,7 +50,6 @@ public class UsuarioEntity implements UserDetails {
         this.nivel = nivel;
     }
 
-    // Métodos UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -90,7 +87,6 @@ public class UsuarioEntity implements UserDetails {
         return true;
     }
 
-    // Getters e Setters - MUDANÇA: retornar UUID mas armazenar como String
     public UUID getId() {
         return id != null ? UUID.fromString(id) : null;
     }
@@ -99,7 +95,6 @@ public class UsuarioEntity implements UserDetails {
         this.id = id != null ? id.toString() : null;
     }
 
-    // Métodos helper internos
     public String getIdAsString() {
         return id;
     }

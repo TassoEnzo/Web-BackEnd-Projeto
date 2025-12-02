@@ -19,7 +19,6 @@ class Treino {
     this.usuarioId,
   });
 
-  // Construtor para criar um novo treino (sem id)
   Treino.novo({
     required this.titulo,
     required this.botaoEscuro,
@@ -29,7 +28,6 @@ class Treino {
     this.usuarioId,
   }) : id = '';
 
-  // Deserialização do JSON (vindo do backend)
   factory Treino.fromJson(Map<String, dynamic> json) {
     return Treino(
       id: json['id'] as String? ?? '',
@@ -45,7 +43,6 @@ class Treino {
     );
   }
 
-  // Serialização para JSON (envio ao backend)
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -58,7 +55,6 @@ class Treino {
     };
   }
 
-  // Para enviar apenas os IDs dos exercícios (usado na criação/atualização)
   Map<String, dynamic> toCreateJson() {
     return {
       'titulo': titulo,
@@ -69,7 +65,6 @@ class Treino {
     };
   }
 
-  // Método copyWith para facilitar atualizações imutáveis
   Treino copyWith({
     String? id,
     String? titulo,

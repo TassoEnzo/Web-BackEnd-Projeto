@@ -26,26 +26,22 @@ public class SecurityConfig {
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Rotas públicas (sem autenticação)
                 .requestMatchers(
-                    "/auth/**",           // Login
-                    "/h2-console/**",     // Console H2
-                    "/error"              // Erro
+                    "/auth/**",           
+                    "/h2-console/**",     
+                    "/error"              
                 ).permitAll()
                 
-                // Permitir criar usuário (POST)
                 .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
                 
-                // Permitir listar treinos (GET) - NOVO
                 .requestMatchers(HttpMethod.GET, "/treinos/**").permitAll()
                 
-                // Permitir listar exercícios (GET) - se precisar
                 .requestMatchers(HttpMethod.GET, "/exercicios/**").permitAll()
                 
-                // Permitir listar categorias (GET) - se precisar
                 .requestMatchers(HttpMethod.GET, "/categorias/**").permitAll()
+
+                .requestMatchers(HttpMethod.GET, "/server").permitAll()
                 
-                // Todas as outras rotas requerem autenticação
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

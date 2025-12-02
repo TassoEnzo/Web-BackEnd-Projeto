@@ -3,39 +3,32 @@ import '../../../api/usuario_api.dart';
 import '../../dominio/entidades/usuario.dart';
 
 class LoginControlador extends ChangeNotifier {
-  // Estado do formulário
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
 
-  // Estados de UI
   bool _carregando = false;
   bool _senhaVisivel = false;
   String? _erro;
   Usuario? _usuarioLogado;
 
-  // Getters
   bool get carregando => _carregando;
   bool get senhaVisivel => _senhaVisivel;
   String? get erro => _erro;
   Usuario? get usuarioLogado => _usuarioLogado;
 
-  // Compatibilidade com código antigo
   String? get mensagemErro => _erro;
 
-  // Alterna visibilidade da senha
   void alternarVisibilidadeSenha() {
     _senhaVisivel = !_senhaVisivel;
     notifyListeners();
   }
 
-  // Limpa mensagens de erro
   void limparErro() {
     _erro = null;
     notifyListeners();
   }
 
-  // Valida email
   String? validarEmail(String? valor) {
     if (valor == null || valor.isEmpty) {
       return 'Digite seu email';
@@ -46,7 +39,6 @@ class LoginControlador extends ChangeNotifier {
     return null;
   }
 
-  // Valida senha
   String? validarSenha(String? valor) {
     if (valor == null || valor.isEmpty) {
       return 'Digite sua senha';
@@ -57,27 +49,22 @@ class LoginControlador extends ChangeNotifier {
     return null;
   }
 
-  // Faz login (mantém assinatura antiga para compatibilidade)
   Future<bool> login({
     required String email,
     required String senha,
   }) async {
-    // Define valores nos controllers se não estiverem setados
     if (emailController.text.isEmpty) emailController.text = email;
     if (senhaController.text.isEmpty) senhaController.text = senha;
     
     return await fazerLogin();
   }
 
-  // Faz login (nova versão)
   Future<bool> fazerLogin() async {
-    // Limpa erro anterior
     _erro = null;
 
     final email = emailController.text.trim();
     final senha = senhaController.text.trim();
 
-    // Validações básicas
     if (email.isEmpty) {
       _erro = 'Digite seu email';
       notifyListeners();
@@ -100,13 +87,11 @@ class LoginControlador extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Chama API de login
       await UsuarioApi.login(
         email: email,
         senha: senha,
       );
 
-      // Busca dados do usuário logado - CORRIGIDO: me() -> getMe()
       _usuarioLogado = await UsuarioApi.getMe();
 
       _carregando = false;
@@ -122,7 +107,6 @@ class LoginControlador extends ChangeNotifier {
     }
   }
 
-  // Faz logout
   Future<void> fazerLogout() async {
     await UsuarioApi.logout();
     _usuarioLogado = null;
@@ -132,13 +116,11 @@ class LoginControlador extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Verifica se está autenticado
   Future<bool> verificarAutenticacao() async {
     try {
       final autenticado = await UsuarioApi.estaAutenticado();
       
       if (autenticado) {
-        // Tenta buscar dados do usuário - CORRIGIDO: me() -> getMe()
         _usuarioLogado = await UsuarioApi.getMe();
         notifyListeners();
         return true;
@@ -146,13 +128,11 @@ class LoginControlador extends ChangeNotifier {
       
       return false;
     } catch (e) {
-      // CORRIGIDO: Removido print, usando debugPrint
       debugPrint('Erro ao verificar autenticação: $e');
       return false;
     }
   }
 
-  // Trata mensagens de erro
   String _tratarErro(String erro) {
     if (erro.contains('Usuário não encontrado')) {
       return 'Email não cadastrado';

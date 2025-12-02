@@ -21,17 +21,15 @@ public class UsuarioController {
         this.service = service;
     }
 
-    // Rota para criar um novo usuário
     @PostMapping
     public UsuarioResponseDTO criar(@RequestBody UsuarioCreateDTO dto) {
-        // Criando o novo usuário com a senha como texto simples (sem criptografia)
         UsuarioEntity novo = new UsuarioEntity(
-                null, // O UUID é gerado automaticamente
+                null,
                 dto.getNome(),
                 dto.getEmail(),
-                dto.getSenha(), // Senha como texto simples (sem criptografia)
+                dto.getSenha(),
                 dto.getFotoBase64(),
-                dto.getNivel() // Usando o nível passado no DTO
+                dto.getNivel()
         );
 
         UsuarioEntity salvo = service.criar(novo);
@@ -45,7 +43,6 @@ public class UsuarioController {
         );
     }
 
-    // Rota para listar todos os usuários
     @GetMapping
     public List<UsuarioResponseDTO> listar() {
         List<UsuarioEntity> usuarios = service.listar();
@@ -60,7 +57,6 @@ public class UsuarioController {
                 .toList();
     }
 
-    // Rota para buscar um usuário pelo ID
     @GetMapping("/{id}")
     public UsuarioResponseDTO buscar(@PathVariable UUID id) {
         UsuarioEntity usuario = service.buscarPorId(id);
@@ -73,7 +69,6 @@ public class UsuarioController {
         );
     }
 
-    // Rota para retornar os dados do usuário autenticado
     @GetMapping("/me")
     public UsuarioResponseDTO me(@AuthenticationPrincipal UsuarioEntity user) {
         return new UsuarioResponseDTO(
@@ -85,16 +80,10 @@ public class UsuarioController {
         );
     }
 
-    // ============================
-    //   UPDATE PARCIAL
-    // ============================
-
-    // Rota para atualizar os dados do usuário autenticado
     @PutMapping("/me")
     public UsuarioResponseDTO updateMe(@AuthenticationPrincipal UsuarioEntity user,
                                        @RequestBody UsuarioUpdateDTO dto) {
 
-        // Mantém valores atuais se dto vier com null
         UsuarioEntity atualizado = new UsuarioEntity(
                 user.getId(),
                 dto.getNome() != null ? dto.getNome() : user.getNome(),
@@ -115,7 +104,6 @@ public class UsuarioController {
         );
     }
 
-    // Atualização por id
     @PutMapping("/{id}")
     public UsuarioResponseDTO atualizar(@PathVariable UUID id, @RequestBody UsuarioUpdateDTO dto) {
 
@@ -141,7 +129,6 @@ public class UsuarioController {
         );
     }
 
-    // Rota para deletar um usuário pelo ID
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable UUID id) {
         service.deletar(id);

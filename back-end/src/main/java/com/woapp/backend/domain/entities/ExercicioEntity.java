@@ -19,10 +19,10 @@ public class ExercicioEntity {
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
-    private String imagem; // ← NOME DO ARQUIVO
+    private String imagem;
 
     @Column(name = "tipo_equipamento")
-    private String tipoEquipamento; // ← ACADEMIA ou CASA
+    private String tipoEquipamento;
 
     @Column(name = "link_youtube")
     private String linkYoutube;
@@ -39,7 +39,6 @@ public class ExercicioEntity {
     )
     private Set<CategoriaEntity> categorias = new HashSet<>();
 
-    // Construtores
     public ExercicioEntity() {
     }
 
@@ -53,7 +52,6 @@ public class ExercicioEntity {
         this.linkYoutube = linkYoutube;
     }
 
-    // Getters e Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 

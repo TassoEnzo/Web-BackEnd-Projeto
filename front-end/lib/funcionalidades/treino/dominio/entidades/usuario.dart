@@ -54,6 +54,5 @@ class Usuario {
     return 'Usuario(id: $id, nome: $nome, email: $email, nivel: $nivel)';
   }
 
-  // ADICIONE ESTE GETTER EXPLÍCITO (workaround)
   String? get foto => fotoBase64;
 }

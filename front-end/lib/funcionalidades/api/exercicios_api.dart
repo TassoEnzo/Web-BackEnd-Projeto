@@ -6,26 +6,20 @@ class ExerciciosApi {
 
   static Future<List<dynamic>> listar() async {
     try {
-      print('🔵 Fazendo requisição para: $_baseUrl');
       
       final resp = await http.get(
         Uri.parse(_baseUrl),
         headers: {"Content-Type": "application/json"},
       );
 
-      print('🔵 Status Code: ${resp.statusCode}');
-      print('🔵 Response Body: ${resp.body}');
-
       if (resp.statusCode != 200) {
         throw Exception("Erro ao listar exercícios: ${resp.statusCode}");
       }
 
       final List<dynamic> lista = jsonDecode(resp.body);
-      print('🔵 Quantidade de exercícios: ${lista.length}');
       
       return lista;
     } catch (e) {
-      print('🔴 ERRO NA API: $e');
       rethrow;
     }
   }

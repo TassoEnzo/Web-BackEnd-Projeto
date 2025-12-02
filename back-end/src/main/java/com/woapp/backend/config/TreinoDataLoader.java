@@ -39,7 +39,6 @@ public class TreinoDataLoader implements CommandLineRunner {
 
     private void criarTreinosPorNivel(String nivel, List<String> letrasTreino) {
 
-        // Pegamos TODOS os exercícios
         List<ExercicioEntity> exercicios = exercicioRepository.findAll();
 
         if (exercicios.isEmpty()) {

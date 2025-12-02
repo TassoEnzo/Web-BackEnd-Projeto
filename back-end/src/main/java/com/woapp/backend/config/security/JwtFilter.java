@@ -41,7 +41,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 UUID userId = jwtService.validarToken(token);
                 System.out.println("Token válido. Extraído userId: " + userId);
 
-                // Converter UUID para String para buscar no banco
                 String userIdString = userId.toString();
                 request.setAttribute("userId", userIdString);
 

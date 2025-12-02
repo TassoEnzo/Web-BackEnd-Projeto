@@ -19,7 +19,6 @@ public class TreinoController {
         this.service = service;
     }
 
-    // *** NOVO GET /treinos ***
     @GetMapping
     public List<TreinoEntity> listarTodos() {
         return service.listarTodos();

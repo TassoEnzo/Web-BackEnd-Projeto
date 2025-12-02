@@ -28,7 +28,6 @@ class _InicioPaginaState extends State<InicioPagina> {
     super.dispose();
   }
 
-  // Verifica se já está autenticado ao abrir o app
   Future<void> _verificarAutenticacao() async {
     final autenticado = await _loginCtrl.verificarAutenticacao();
     if (!mounted) return;
@@ -36,7 +35,6 @@ class _InicioPaginaState extends State<InicioPagina> {
     if (autenticado && _loginCtrl.usuarioLogado != null) {
       final usuario = _loginCtrl.usuarioLogado!;
       
-      // Se não tem nível, vai para escolha
       if (usuario.nivel == null || usuario.nivel!.isEmpty) {
         Navigator.pushReplacement(
           context,
@@ -45,7 +43,6 @@ class _InicioPaginaState extends State<InicioPagina> {
           ),
         );
       } else {
-        // Se tem nível, vai direto para treinos
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -79,7 +76,6 @@ class _InicioPaginaState extends State<InicioPagina> {
                     ),
                     const SizedBox(height: 30),
                     
-                    // Campo de Email
                     TextField(
                       controller: ctrl.emailController,
                       keyboardType: TextInputType.emailAddress,
@@ -99,7 +95,6 @@ class _InicioPaginaState extends State<InicioPagina> {
                     
                     const SizedBox(height: 16),
                     
-                    // Campo de Senha
                     TextField(
                       controller: ctrl.senhaController,
                       obscureText: !ctrl.senhaVisivel,
@@ -128,7 +123,6 @@ class _InicioPaginaState extends State<InicioPagina> {
 
                     const SizedBox(height: 24),
                     
-                    // Botão de Login ou Loading
                     ctrl.carregando
                         ? const Center(
                             child: CircularProgressIndicator(color: Colors.white),
@@ -139,7 +133,6 @@ class _InicioPaginaState extends State<InicioPagina> {
                               onPressed: () async {
                                 final navigator = Navigator.of(context);
                                 
-                                // Tenta fazer login
                                 final sucesso = await ctrl.fazerLogin();
                                 
                                 if (!mounted) return;
@@ -147,7 +140,6 @@ class _InicioPaginaState extends State<InicioPagina> {
                                 if (sucesso && ctrl.usuarioLogado != null) {
                                   final usuario = ctrl.usuarioLogado!;
                                   
-                                  // Verifica se tem nível definido
                                   if (usuario.nivel == null || usuario.nivel!.isEmpty) {
                                     navigator.pushReplacement(
                                       MaterialPageRoute(
@@ -184,7 +176,6 @@ class _InicioPaginaState extends State<InicioPagina> {
                     
                     const SizedBox(height: 20),
                     
-                    // Link para cadastro
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -213,7 +204,6 @@ class _InicioPaginaState extends State<InicioPagina> {
                       ],
                     ),
                     
-                    // Mensagem de erro
                     if (ctrl.erro != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 16),
